@@ -2,11 +2,12 @@ $(function () {
     console.log("jquery ready");
 
     $('#click_me').on('click', function () {
-        let $function2 = 'sent_info' + $('#input_count').val();
+        let message = $('#input_count').val();
         $.ajax({
             url: "ajax-post.php",
             type: "POST",
-            data: {action: $function2},
+            data: {action: 'sent_info',
+                    message: message },
             success: function (respond) {
                 obj = $.parseJSON(respond);
                 console.log(obj);
@@ -17,9 +18,10 @@ $(function () {
                  * */
                 if (typeof obj === 'object') {
                     console.log('array it');
-                    $.each(obj, function (index, value) {
-                        $('.main-content').append('<p>' + value + '</p>');
-                    })
+                    // $.each(obj, function (index, value) {
+                        // $('.main-content').append('<p>' + value + '</p>');
+                        $('.main-content').append('<div class="message-wrap"><p>' + obj['message'] + '</p><span>'+ obj['time'] +'</span></div>');
+                    // }
                 }
                 else {
                     $('.main-content').append('<p>' + obj + '</p>');
