@@ -20,15 +20,17 @@ $(function () {
                     console.log('array it');
                     // $.each(obj, function (index, value) {
                         // $('.main-content').append('<p>' + value + '</p>');
-                        $('.main-content').append('<div class="message-wrap"><p>' + obj['message'] + '</p><span>'+ obj['time'] +'</span></div>');
+                        $('.main-content').prepend('<div class="message-wrap"><p>' + obj['message'] + '</p><span>'+ obj['time'] +'</span></div>');
                     // }
                 }
                 else {
-                    $('.main-content').append('<p>' + obj + '</p>');
+                    $('.main-content').prepend('<p>' + obj + '</p>');
                 }
 
             }
         })
+
+        $('#input_count').val(null);
     })
 
 });

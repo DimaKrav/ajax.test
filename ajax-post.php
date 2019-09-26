@@ -1,6 +1,24 @@
 <?php
 
+
+function db_connect() {
+    $servername = "172.17.1.64:3306"; //Лінк на базу даних
+    $username = "root";
+    $password = "";
+    $dbname = "ajax.test";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $sql = "INSERT INTO test_table (chat_text) VALUES ('sdfhssdhs')";
+
+    $conn->query($sql);
+
+    $conn->close();
+}
+
+
 function sent_info(){
+    db_connect();
+
 //    $info = 'Some text';
     $message = array('message' => $_REQUEST['message'],'time' => date("D M Y H:m:s"));
 
