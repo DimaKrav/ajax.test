@@ -1,5 +1,9 @@
 <html>
-<?php include_once 'db-connection.php'; ?>
+<?php include_once 'db-connection.php';
+include_once 'ajax-post.php';
+
+?>
+
 <head>
     <title>Some small Ajax</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -8,9 +12,13 @@
 <body>
 
 <textarea type="text"  cols="30"
-          rows="10" placeholder="Enter message" id="input_count"></textarea>
+          rows="10" placeholder="Ctrl+Enter for fast Send" id="input_count"></textarea>
 <button id="click_me">Send</button>
-<div class="main-content"></div>
+<?php chat_id();?>
+
+
+
+<div class="main-content"><?php db_connect_for_message();?></div>
 </body>
 
 
