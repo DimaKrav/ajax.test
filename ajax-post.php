@@ -1,18 +1,13 @@
 <?php
 
+include_once 'db-connection.php';
 /*
  * Запис повідомлення в бд
  */
 
 function db_connect_insert_message()
 {
-
-    $servername = "172.17.1.64:3306"; //Лінк на базу даних
-    $username = "root";
-    $password = "";
-    $dbname = "ajax.test";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli(servername, username, password, dbname);
 
     $stmt = $conn->prepare("INSERT INTO test_table (chat_text) VALUES (?)");
     $stmt->bind_param("s", $_REQUEST['message']);
@@ -43,39 +38,16 @@ function sent_info()
  */
 
 
-
 function db_connect_for_message()
 {
+    $conn = new mysqli(servername, username, password, dbname);
 
-    if(isset($last_chat_id)){
-        $last_chat_id = 0;
-    }
-    $servername = "172.17.1.64:3306"; //Лінк на базу даних
-    $username = "root";
-    $password = "";
-    $dbname = "ajax.test";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    /*
-     * Перший вивод повідомлень
-     */
-
-    $sql = "SELECT chat_id, chat_text, chat_time FROM test_table  ORDER BY chat_time DESC LIMIT 5;";
+    $sql = "SELECT chat_id, chat_text, chat_time FROM test_table  ORDER BY chat_time DESC LIMIT 10;";
     $result = $conn->query($sql);
 
-    $first_row = false;
     if ($result->num_rows > 0) {
         // output data of each row
         while ($row = $result->fetch_assoc()) {
-
-            /*
-             * Запис останнього добавленного id
-             */
-            if (!$first_row) {
-              $last_chat_id = $row['chat_id'];
-                $first_row = true;
-            }
 
             echo "<div class='message-wrap'><p>" . $row["chat_text"] . "</p><span>" . $row["chat_time"] . "</span></div>";
         }
@@ -84,17 +56,11 @@ function db_connect_for_message()
     }
 
     $conn->close();
-
 }
 
 function chat_id()
 {
-    $servername = "172.17.1.64:3306"; //Лінк на базу даних
-    $username = "root";
-    $password = "";
-    $dbname = "ajax.test";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli(servername, username, password, dbname);
 
     $sql = "SELECT chat_id FROM test_table  ORDER BY chat_time DESC LIMIT 1;";
     $result = $conn->query($sql);
@@ -106,10 +72,9 @@ function chat_id()
             /*
              * Запис останнього добавленного id
              */
-
             $last_chat_id = $row['chat_id'];
 
-            echo '<input type="hidden" id="last_chat_message" name="last_chat_message" value="'.$last_chat_id.'">';
+            echo '<input type="hidden" id="last_chat_message" name="last_chat_message" value="' . $last_chat_id . '">';
 
         }
     }
@@ -122,12 +87,7 @@ function ajax_message_output()
     global $last_chat_id, $check_message;
     $last_chat_id = $_REQUEST['id'];
 
-    $servername = "172.17.1.64:3306"; //Лінк на базу даних
-    $username = "root";
-    $password = "";
-    $dbname = "ajax.test";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli(servername, username, password, dbname);
 
 
     $sql = "SELECT chat_id FROM test_table  ORDER BY chat_id  DESC LIMIT 1;";
@@ -144,7 +104,7 @@ function ajax_message_output()
 //    $check_message = $last_check_chat_id.' '.$last_chat_id;
     if ($last_check_chat_id > $last_chat_id) {
         global $last_chat_id;
-        $sql = "SELECT chat_id, chat_text, chat_time FROM test_table  WHERE chat_id > ".$last_chat_id." ORDER BY chat_time DESC ";
+        $sql = "SELECT chat_id, chat_text, chat_time FROM test_table  WHERE chat_id > " . $last_chat_id . " ORDER BY chat_time DESC ";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -167,12 +127,12 @@ function ajax_message_output()
 }
 
 
-    /*
-     * Перевірка на наявність функції для ajax
-     */
-    if (!empty($_REQUEST)) {
-        if (function_exists($_REQUEST['action'])) {
-            call_user_func($_REQUEST['action']);
-        }
-        die();
+/*
+ * Перевірка на наявність функції для ajax
+ */
+if (!empty($_REQUEST)) {
+    if (function_exists($_REQUEST['action'])) {
+        call_user_func($_REQUEST['action']);
     }
+    die();
+}

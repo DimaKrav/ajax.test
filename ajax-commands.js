@@ -2,15 +2,16 @@ $(function () {
     console.log("jquery ready");
 
     $('#input_count').keydown(function (e) {
+        check_new_message();
 
         if (e.ctrlKey && e.keyCode == 13) {
 
             let message = $('#input_count').val();
-            message = message.replace(/\r?\n/g, '<br />');
             if (message == ''){
                 e.preventDefault();
             }
             else {
+                message = message.replace(/\r?\n/g, '<br />');
                 $.ajax({
                     url: "ajax-post.php",
                     type: "POST",
@@ -40,17 +41,20 @@ $(function () {
             Очистка поля вводу повідомлення
              */
             $('#input_count').val(null);
+            $('#input_count').focus();
 
         }
     });
 
     $('#click_me').on('click', function (e) {
+        check_new_message();
         let message = $('#input_count').val();
-        message = message.replace(/\r?\n/g, '<br />');
+
         if (message == ''){
            e.preventDefault();
         }
         else {
+            message = message.replace(/\r?\n/g, '<br />');
             $.ajax({
                 url: "ajax-post.php",
                 type: "POST",
@@ -80,6 +84,7 @@ $(function () {
         Очистка поля вводу повідомлення
          */
         $('#input_count').val(null);
+        $('#input_count').focus();
     })
 
 
