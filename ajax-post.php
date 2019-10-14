@@ -88,7 +88,7 @@ function mess_out()
      */
     if ($last_check_chat_id > $last_chat_id) {
         global $last_chat_id;
-        $sql = "SELECT chat_id, chat_text, chat_time FROM test_table  WHERE chat_id > " . $last_chat_id . " ORDER BY chat_time DESC ";
+        $sql = "SELECT chat_id, chat_text, chat_time FROM test_table  WHERE chat_id > " . $last_chat_id . " ORDER BY chat_time ";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {

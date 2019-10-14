@@ -80,6 +80,7 @@ $(function () {
                     let objs = $.parseJSON(respond);
                     if (typeof objs === 'object') {
                         // console.log(objs);
+                        // $('#last_chat_message').val(objs[0]['last_chat_id']);
                         objs.map(function (obj) {
                             $('.main-content').prepend('<div class="message-wrap"><p>' + obj['message'] + '</p><span>' + obj['time'] + '</span></div>');
                             $('#last_chat_message').val(obj['last_chat_id']);
