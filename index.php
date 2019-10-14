@@ -1,8 +1,5 @@
 <html>
-<?php include_once 'db-connection.php';
-include_once 'ajax-post.php';
-
-?>
+<?php include_once 'ajax-post.php'; ?>
 
 <head>
     <title>Some small Ajax</title>
@@ -11,14 +8,13 @@ include_once 'ajax-post.php';
 </head>
 <body>
 
-<textarea type="text"  cols="30"
+<textarea type="text" cols="30"
           rows="10" placeholder="Ctrl+Enter for fast Send" id="input_count"></textarea>
 <button id="click_me">Send</button>
-<?php chat_id();?>
+<?php chat_id(); ?>
 
 
-
-<div class="main-content"><?php db_connect_for_message();?></div>
+<div class="main-content"><?php db_connect_for_message(); ?></div>
 </body>
 
 

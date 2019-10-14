@@ -1,11 +1,12 @@
 <?php
 
 include_once 'db-connection.php';
+
 /*
  * Запис повідомлення в бд
  */
 
-function db_connect_insert_message()
+function sent_info()
 {
     $conn = new mysqli(servername, username, password, dbname);
 
@@ -15,21 +16,6 @@ function db_connect_insert_message()
 
     $stmt->close();
     $conn->close();
-
-
-}
-
-/*
- * Відправка повідомлення зразу на фронт
- */
-function sent_info()
-{
-    db_connect_insert_message();
-
-
-    $message = array('message' => $_REQUEST['message'], 'time' => date("Y-m-d H:m:s"));
-
-    echo json_encode($message);
 }
 
 
@@ -54,7 +40,6 @@ function db_connect_for_message()
     } else {
         echo "0 results";
     }
-
     $conn->close();
 }
 
@@ -82,7 +67,7 @@ function chat_id()
 }
 
 
-function ajax_message_output()
+function mess_out()
 {
     global $last_chat_id, $check_message;
     $last_chat_id = $_REQUEST['id'];
@@ -101,7 +86,6 @@ function ajax_message_output()
      * Перевірка чи перевірений id повідомлення більший за останній відомий.
      * Якщо більший то вигрузити всі повідомлення починаючи з останнього відомого
      */
-//    $check_message = $last_check_chat_id.' '.$last_chat_id;
     if ($last_check_chat_id > $last_chat_id) {
         global $last_chat_id;
         $sql = "SELECT chat_id, chat_text, chat_time FROM test_table  WHERE chat_id > " . $last_chat_id . " ORDER BY chat_time DESC ";
